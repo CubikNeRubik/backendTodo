@@ -16,18 +16,22 @@ exports.ListController = void 0;
 const common_1 = require("@nestjs/common");
 const create_todo_dto_1 = require("./dto/create-todo.dto");
 const update_todo_dto_1 = require("./dto/update-todo.dto");
+const list_service_1 = require("./list.service");
 let ListController = class ListController {
+    constructor(listService) {
+        this.listService = listService;
+    }
     getAll() {
-        return 'getAll';
+        return this.listService.findAll();
     }
     create(createTodoDto) {
-        return createTodoDto;
+        return this.listService.create(createTodoDto);
     }
     remove(id) {
-        return "Remove" + id;
+        return this.listService.deleteById(id);
     }
     update(updateTodoDto, id) {
-        return 'Update' + id;
+        return this.listService.updateTOdo(updateTodoDto, id);
     }
 };
 __decorate([
@@ -38,6 +42,7 @@ __decorate([
 ], ListController.prototype, "getAll", null);
 __decorate([
     common_1.Post(),
+    common_1.HttpCode(common_1.HttpStatus.CREATED),
     __param(0, common_1.Body()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [create_todo_dto_1.CreateTodoDto]),
@@ -58,7 +63,8 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], ListController.prototype, "update", null);
 ListController = __decorate([
-    common_1.Controller('list')
+    common_1.Controller('list'),
+    __metadata("design:paramtypes", [list_service_1.ListService])
 ], ListController);
 exports.ListController = ListController;
 //# sourceMappingURL=list.controller.js.map
