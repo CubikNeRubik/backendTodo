@@ -7,6 +7,6 @@ export declare class ListService {
     constructor(listModel: Model<ListDocument>);
     findAll(): Promise<List[]>;
     create(todoDto: CreateTodoDto): Promise<List>;
-    deleteById(id: any): Promise<List>;
+    deleteById(index: any): Promise<List>;
     updateTodo(id: any, updateTodoDto: UpdateTodoDto): Promise<List>;
 }

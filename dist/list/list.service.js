@@ -25,11 +25,12 @@ let ListService = class ListService {
         return this.listModel.find().exec();
     }
     async create(todoDto) {
-        const newTodo = new this.listModel(todoDto);
+        const index = this.listModel.length - 1;
+        const newTodo = new this.listModel(Object.assign(Object.assign({}, todoDto), { index }));
         return newTodo.save();
     }
-    async deleteById(id) {
-        return this.listModel.findByIdAndRemove(id);
+    async deleteById(index) {
+        return this.listModel.findOneAndRemove(index);
     }
     async updateTodo(id, updateTodoDto) {
         return this.listModel.findByIdAndUpdate(id, updateTodoDto);

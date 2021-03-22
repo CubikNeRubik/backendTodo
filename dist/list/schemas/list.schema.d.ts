@@ -1,7 +1,7 @@
 import { Document } from 'mongoose';
 export declare type ListDocument = List & Document;
 export declare class List {
-    index: number;
+    id: number;
     isComplete: boolean;
     text: string;
     time: number;

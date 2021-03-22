@@ -16,7 +16,7 @@ let List = class List {
 __decorate([
     mongoose_1.Prop(),
     __metadata("design:type", Number)
-], List.prototype, "index", void 0);
+], List.prototype, "id", void 0);
 __decorate([
     mongoose_1.Prop(),
     __metadata("design:type", Boolean)

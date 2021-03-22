@@ -18,13 +18,13 @@ export class ListService{
     }
 
     async create(todoDto:CreateTodoDto): Promise<List>{
-        
-      const newTodo = new this.listModel(todoDto)
+      const index = this.listModel.length -1
+      const newTodo = new this.listModel({...todoDto, index})
       return newTodo.save()
     }
 
-    async deleteById(id): Promise<List>{
-        return this.listModel.findByIdAndRemove(id)
+    async deleteById(index): Promise<List>{
+        return this.listModel.findOneAndRemove(index)
         // const index = this.list.findIndex(elem => elem.id === id);
         // if (index === -1) {
         //   throw new NotFoundException();

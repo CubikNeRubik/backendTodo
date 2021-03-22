@@ -27,8 +27,8 @@ let ListController = class ListController {
     create(createTodoDto) {
         return this.listService.create(createTodoDto);
     }
-    remove(id) {
-        return this.listService.deleteById(id);
+    remove(index) {
+        return this.listService.deleteById(index);
     }
     update(id, updateTodoDto) {
         return this.listService.updateTodo(id, updateTodoDto);
@@ -49,8 +49,8 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], ListController.prototype, "create", null);
 __decorate([
-    common_1.Delete(':id'),
-    __param(0, common_1.Param('id')),
+    common_1.Delete(':index'),
+    __param(0, common_1.Param('index')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", Promise)

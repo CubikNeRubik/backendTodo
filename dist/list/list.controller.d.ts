@@ -7,6 +7,6 @@ export declare class ListController {
     constructor(listService: ListService);
     getAll(): Promise<List[]>;
     create(createTodoDto: CreateTodoDto): Promise<List>;
-    remove(id: string): Promise<List>;
+    remove(index: string): Promise<List>;
     update(id: string, updateTodoDto: UpdateTodoDto): Promise<List>;
 }

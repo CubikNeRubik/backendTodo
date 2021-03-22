@@ -21,9 +21,9 @@ export class ListController {
         return this.listService.create(createTodoDto)
     }
 
-    @Delete(':id')
-    remove(@Param('id') id:string):Promise<List>{
-        return this.listService.deleteById(id)
+    @Delete(':index')
+    remove(@Param('index') index:string):Promise<List>{
+        return this.listService.deleteById(index)
     }
 
     @Put(':id')
