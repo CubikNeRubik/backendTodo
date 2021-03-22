@@ -30,15 +30,15 @@ let ListController = class ListController {
     remove(id) {
         return this.listService.deleteById(id);
     }
-    update(updateTodoDto, id) {
-        return this.listService.updateTOdo(updateTodoDto, id);
+    update(id, updateTodoDto) {
+        return this.listService.updateTodo(id, updateTodoDto);
     }
 };
 __decorate([
     common_1.Get(),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
-    __metadata("design:returntype", void 0)
+    __metadata("design:returntype", Promise)
 ], ListController.prototype, "getAll", null);
 __decorate([
     common_1.Post(),
@@ -46,21 +46,21 @@ __decorate([
     __param(0, common_1.Body()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [create_todo_dto_1.CreateTodoDto]),
-    __metadata("design:returntype", void 0)
+    __metadata("design:returntype", Promise)
 ], ListController.prototype, "create", null);
 __decorate([
-    common_1.Delete('id'),
+    common_1.Delete(':id'),
     __param(0, common_1.Param('id')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
-    __metadata("design:returntype", void 0)
+    __metadata("design:returntype", Promise)
 ], ListController.prototype, "remove", null);
 __decorate([
-    common_1.Put('id'),
-    __param(0, common_1.Body()), __param(1, common_1.Param('id')),
+    common_1.Put(':id'),
+    __param(0, common_1.Param('id')), __param(1, common_1.Body()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [update_todo_dto_1.UpdateTodoDto, String]),
-    __metadata("design:returntype", void 0)
+    __metadata("design:paramtypes", [String, update_todo_dto_1.UpdateTodoDto]),
+    __metadata("design:returntype", Promise)
 ], ListController.prototype, "update", null);
 ListController = __decorate([
     common_1.Controller('list'),

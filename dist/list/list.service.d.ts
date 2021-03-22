@@ -1,10 +1,12 @@
+import { Model } from "mongoose";
 import { CreateTodoDto } from "./dto/create-todo.dto";
+import { UpdateTodoDto } from "./dto/update-todo.dto";
+import { List, ListDocument } from "./schemas/list.schema";
 export declare class ListService {
-    private list;
-    findAll(): any[];
-    create(todoDto: CreateTodoDto): void;
-    deleteById(id: any): {
-        message: string;
-    };
-    updateTOdo(updateTodoDto: any, id: any): void;
+    private listModel;
+    constructor(listModel: Model<ListDocument>);
+    findAll(): Promise<List[]>;
+    create(todoDto: CreateTodoDto): Promise<List>;
+    deleteById(id: any): Promise<List>;
+    updateTodo(id: any, updateTodoDto: UpdateTodoDto): Promise<List>;
 }

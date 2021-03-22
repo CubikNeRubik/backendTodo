@@ -5,32 +5,40 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+var __param = (this && this.__param) || function (paramIndex, decorator) {
+    return function (target, key) { decorator(target, key, paramIndex); }
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ListService = void 0;
 const common_1 = require("@nestjs/common");
+const mongoose_1 = require("@nestjs/mongoose");
+const mongoose_2 = require("mongoose");
+const list_schema_1 = require("./schemas/list.schema");
 let ListService = class ListService {
-    constructor() {
-        this.list = [];
+    constructor(listModel) {
+        this.listModel = listModel;
     }
-    findAll() {
-        return this.list;
+    async findAll() {
+        return this.listModel.find().exec();
     }
-    create(todoDto) {
-        this.list.push(Object.assign(Object.assign({}, todoDto), { id: Date.now().toString() }));
+    async create(todoDto) {
+        const newTodo = new this.listModel(todoDto);
+        return newTodo.save();
     }
-    deleteById(id) {
-        const index = this.list.findIndex(elem => elem.id === id);
-        if (index === -1) {
-            throw new common_1.NotFoundException();
-        }
-        this.list.splice(index);
-        return { message: 'Todo Deleted' };
+    async deleteById(id) {
+        return this.listModel.findByIdAndRemove(id);
     }
-    updateTOdo(updateTodoDto, id) {
+    async updateTodo(id, updateTodoDto) {
+        return this.listModel.findByIdAndUpdate(id, updateTodoDto);
     }
 };
 ListService = __decorate([
-    common_1.Injectable()
+    common_1.Injectable(),
+    __param(0, mongoose_1.InjectModel(list_schema_1.List.name)),
+    __metadata("design:paramtypes", [mongoose_2.Model])
 ], ListService);
 exports.ListService = ListService;
 //# sourceMappingURL=list.service.js.map

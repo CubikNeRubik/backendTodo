@@ -1,13 +1,12 @@
 import { CreateTodoDto } from './dto/create-todo.dto';
 import { UpdateTodoDto } from './dto/update-todo.dto';
 import { ListService } from './list.service';
+import { List } from './schemas/list.schema';
 export declare class ListController {
     private readonly listService;
     constructor(listService: ListService);
-    getAll(): any[];
-    create(createTodoDto: CreateTodoDto): void;
-    remove(id: string): {
-        message: string;
-    };
-    update(updateTodoDto: UpdateTodoDto, id: string): void;
+    getAll(): Promise<List[]>;
+    create(createTodoDto: CreateTodoDto): Promise<List>;
+    remove(id: string): Promise<List>;
+    update(id: string, updateTodoDto: UpdateTodoDto): Promise<List>;
 }
