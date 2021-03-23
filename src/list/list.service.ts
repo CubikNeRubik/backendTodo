@@ -1,6 +1,9 @@
-import { Injectable} from "@nestjs/common";
+import { forwardRef, Inject, Injectable} from "@nestjs/common";
 import { InjectModel } from "@nestjs/mongoose";
 import { Model } from "mongoose";
+import { Counter, CounterDocument } from "src/counter/counter.schema";
+import { CounterService } from "src/counter/counter.service";
+
 
 import { CreateTodoDto } from "./dto/create-todo.dto";
 import { UpdateTodoDto } from "./dto/update-todo.dto";
@@ -9,7 +12,10 @@ import { List, ListDocument } from "./schemas/list.schema";
 
 @Injectable()
 export class ListService{
-    constructor(@InjectModel(List.name) private listModel: Model<ListDocument>) {}
+    constructor(
+        // @Inject(forwardRef(() => CounterService))
+        @InjectModel(List.name) private listModel: Model<ListDocument>,
+        ) {}
 
     // private list = [];
 
