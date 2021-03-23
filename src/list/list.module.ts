@@ -16,11 +16,12 @@ import { List, ListSchema } from "./schemas/list.schema";
                 imports:[CounterModule],
                 useFactory:(counterService: CounterService) => {
                     const list = ListSchema;
+
                     list.pre('save', function() {
                         // let id = list.path('_id');
                         console.log('presave')
                         counterService.replaceId(List.name)
-                            .then(a => console.log(a));
+                            // .then(a => console.log(a));
                     
                     });
                    

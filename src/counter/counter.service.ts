@@ -13,10 +13,23 @@ export class CounterService{
             @InjectModel(Counter.name) private counterModel: Model<CounterDocument>
         ) {}
 
-    replaceId(id){
-        return this.counterModel.findOneAndUpdate( {_id: id}, {$inc: { seq: 1},  function(counter)   {
+
+    init(entityName){
+        var existEntityName = this.counterModel.findOne(entityName)
+        if (existEntityName == null){
+            this.counterModel.create({
+                seq:0
+            })
+            console.log(entityName)
+        }
+    }
+    
+    replaceId(entityName){
+        this.init(entityName)
+        console.log(entityName)
+        return this.counterModel.findOneAndUpdate( {_id: entityName}, {$inc: { seq: 1},  function(counter)   {
             console.log("counter", counter)
-            id = counter.seq
+            entityName = counter.seq
             // id.next();
         }}).exec();
     }
