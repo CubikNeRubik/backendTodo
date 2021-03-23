@@ -6,7 +6,7 @@ export type ListDocument = List & Document;
 @Schema()
 export class List{
     @Prop()
-    index:number
+    id:number
 
     @Prop()
     isComplete:boolean
