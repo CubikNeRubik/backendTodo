@@ -9,7 +9,8 @@ import { CounterService } from "./counter.service";
     providers:[CounterService],
     controllers:[],
     imports:[ 
-        MongooseModule.forFeature([{ name: Counter.name, schema: counterSchema 
+        MongooseModule.forFeature([{ 
+            name: Counter.name, schema: counterSchema 
         }])],
         exports:[CounterService]
     

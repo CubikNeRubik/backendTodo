@@ -16,13 +16,12 @@ import { List, ListSchema } from "./schemas/list.schema";
                 imports:[CounterModule],
                 useFactory:(counterService: CounterService) => {
                     const list = ListSchema;
-
-                    list.pre('save', function() {
-                        // let id = list.path('_id');
-                        console.log('presave')
-                        counterService.replaceId(List.name)
-                            // .then(a => console.log(a));
                     
+                    counterService.init(List.name) 
+                    list.pre('save', async function(this: any) {
+                        const id = await counterService.replaceId(List.name);
+                        console.log('presave', id)
+                        this._id = id;  
                     });
                    
                     return list;
