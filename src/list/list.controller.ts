@@ -1,5 +1,8 @@
-import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, Post, Put } from '@nestjs/common';
+import { Body, ClassSerializerInterceptor, Controller, Delete, Get, HttpCode, HttpStatus, Param, Post, Put, UseInterceptors } from '@nestjs/common';
+import { AnyFilesInterceptor } from '@nestjs/platform-express';
+import { plainToClass, serialize } from 'class-transformer';
 import { CreateTodoDto } from './dto/create-todo.dto';
+import { TodoItem } from './dto/transform-todo.dto';
 import { UpdateTodoDto } from './dto/update-todo.dto';
 import { ListService } from './list.service';
 import { List } from './schemas/list.schema';
@@ -9,10 +12,14 @@ export class ListController {
     
     constructor(private readonly listService:ListService){}
     
-
+    @UseInterceptors(ClassSerializerInterceptor)
     @Get()
-    getAll():Promise<List[]>{
+    getAll(){
         return this.listService.findAll()
+    
+       
+        // return this.listService.findAll()
+    
     }
 
     @Post()

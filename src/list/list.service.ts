@@ -1,11 +1,13 @@
 import { forwardRef, Inject, Injectable} from "@nestjs/common";
 import { InjectModel } from "@nestjs/mongoose";
+import { classToPlain, deserialize, plainToClass, serialize } from "class-transformer";
 import { Model } from "mongoose";
 import { Counter, CounterDocument } from "src/counter/counter.schema";
 import { CounterService } from "src/counter/counter.service";
 
 
 import { CreateTodoDto } from "./dto/create-todo.dto";
+import { TodoItem } from "./dto/transform-todo.dto";
 import { UpdateTodoDto } from "./dto/update-todo.dto";
 import { listModule } from "./list.module";
 import { List, ListDocument } from "./schemas/list.schema";
@@ -19,24 +21,23 @@ export class ListService{
 
     // private list = [];
 
-    async findAll(): Promise<List[]>{
-        return this.listModel.find().exec()
+    async findAll(){
+        const getItemResponse =  await this.listModel.find().exec()
+        // let album = plainToClass(TodoItem, response);
+        let convertItems = plainToClass(TodoItem, getItemResponse, { excludeExtraneousValues: true })
+        return convertItems
+        
     }
 
     async create(todoDto:CreateTodoDto): Promise<List>{
         
       const newTodo = new this.listModel(todoDto)
-      return newTodo.save()
+      const result = await newTodo.save()
+      return result.toObject();
     }
 
     async deleteById(id): Promise<List>{
         return this.listModel.findByIdAndRemove(id)
-        // const index = this.list.findIndex(elem => elem.id === id);
-        // if (index === -1) {
-        //   throw new NotFoundException();
-        // }
-        // this.list.splice(index);
-        // return { message: 'Todo Deleted' };
     }
 
     async updateTodo(id, updateTodoDto:UpdateTodoDto): Promise<List>{

@@ -1,7 +1,7 @@
 import { Module } from "@nestjs/common";
 import { MongooseModule } from "@nestjs/mongoose";
-import { CounterModule } from "src/counter/counter.module";
-import { CounterService } from "src/counter/counter.service";
+import { CounterModule } from "../counter/counter.module";
+import { CounterService } from "../counter/counter.service";
 import { ListController } from "./list.controller";
 import { ListService } from "./list.service";
 import { List, ListSchema } from "./schemas/list.schema";
