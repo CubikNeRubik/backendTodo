@@ -2,9 +2,12 @@ import { Exclude, Expose, Type } from 'class-transformer';
 import { List } from '../schemas/list.schema';
 import { CreateTodoDto } from './create-todo.dto';
 export class TodoItem{
-    // @Exclude({ toPlainOnly: true })
+    readonly _id:number 
+
     @Expose()
-    readonly id:any;
+    get id(): number {
+        return this._id;
+    };
 
     @Expose()
     readonly isComplete:boolean
@@ -14,15 +17,15 @@ export class TodoItem{
 
     @Expose()
     readonly time:number
-    
+
     @Expose()
     readonly selected:boolean 
 
     // @Type(() => List)
     // list: List[]
 
-    // constructor(partial: Partial<TodoItem>) {
-    //     Object.assign(this, partial);
-    //   }
+    constructor(partial: Partial<TodoItem>) {
+        Object.assign(this, partial);
+    }
 }
 

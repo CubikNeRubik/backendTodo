@@ -21,26 +21,30 @@ export class ListService{
 
     // private list = [];
 
-    async findAll(){
+    async findAll(): Promise<TodoItem[]>{
         const getItemResponse =  await this.listModel.find().exec()
+        return getItemResponse.map(m => new TodoItem(m.toObject()))
         // let album = plainToClass(TodoItem, response);
-        let convertItems = plainToClass(TodoItem, getItemResponse, { excludeExtraneousValues: true })
-        return convertItems
+        // let convertItems = plainToClass(TodoItem, getItemResponse.map(m => m.toObject()));
+        // return convertItems
         
     }
 
-    async create(todoDto:CreateTodoDto): Promise<List>{
+    async create(todoDto:CreateTodoDto): Promise<TodoItem>{
         
-      const newTodo = new this.listModel(todoDto)
-      const result = await newTodo.save()
-      return result.toObject();
+        const newTodo = new this.listModel(todoDto)
+        const result = await newTodo.save()
+        const newTransformItem = new TodoItem(result.toObject())
+        return newTransformItem
     }
-
+    
     async deleteById(id): Promise<List>{
         return this.listModel.findByIdAndRemove(id)
     }
 
-    async updateTodo(id, updateTodoDto:UpdateTodoDto): Promise<List>{
-        return this.listModel.findByIdAndUpdate(id, updateTodoDto)
+    async updateTodo(id, updateTodoDto:UpdateTodoDto):Promise<TodoItem>{
+        const updateResponse = await this.listModel.findByIdAndUpdate(id, updateTodoDto,  {new: true})
+        const updateTransformItem = new TodoItem(updateResponse.toObject())
+        return updateTransformItem
     }
 }
