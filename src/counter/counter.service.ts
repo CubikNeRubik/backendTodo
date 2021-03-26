@@ -37,7 +37,7 @@ export class CounterService{
             // console.log("entityName",entityName)
             // console.log("existEntityName",existEntityName)
            
-        }
+    }
     
     
     async replaceId(entityName){ 
