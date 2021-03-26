@@ -37,14 +37,14 @@ export class ListService{
         const newTransformItem = new TodoItem(result.toObject())
         return newTransformItem
     }
-    
+
     async deleteById(id): Promise<List>{
         return this.listModel.findByIdAndRemove(id)
     }
 
     async updateTodo(id, updateTodoDto:UpdateTodoDto):Promise<TodoItem>{
         const updateResponse = await this.listModel.findByIdAndUpdate(id, updateTodoDto,  {new: true})
-        const updateTransformItem = new TodoItem(updateResponse.toObject())
-        return updateTransformItem
+        return  new TodoItem(updateResponse.toObject())
+        
     }
 }
