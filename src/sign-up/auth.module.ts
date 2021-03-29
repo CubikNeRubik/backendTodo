@@ -1,16 +1,18 @@
 import { Module } from "@nestjs/common";
+import { JwtModule } from "@nestjs/jwt";
 import { MongooseModule } from "@nestjs/mongoose";
 import { CounterModule } from "../counter/counter.module";
 
 import { CounterService } from "../counter/counter.service";
 import { AuthController } from "./auth.controller";
 import { AuthService } from "./auth.service";
+import { jwtConstants } from "./constants";
 import { User, UserSchema } from "./user.schema";
 
 @Module({
     providers:[AuthService],
     controllers:[AuthController],
-    imports:[
+    imports:[JwtModule.register({ secret: jwtConstants.secret}),
         MongooseModule.forFeatureAsync([
             {
                 name: User.name,
@@ -31,6 +33,7 @@ import { User, UserSchema } from "./user.schema";
             }
         ])
     ],
+    
     // imports:[MongooseModule.forFeature([{ name: User.name, schema: UserSchema }])]
 })
 
