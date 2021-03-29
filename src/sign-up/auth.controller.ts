@@ -17,12 +17,12 @@ export class AuthController{
 
     @Post(':sign-up')
     async signUp(@Body() signUpUser:SignUpUserDto):Promise<User>{
-        const existUser = await this.authService.getUserByEmail(signUpUser.email)
-        if(existUser == false){
-            return this.authService.signUp(signUpUser) 
-        }else{
-            throw new HttpException('User already exists', HttpStatus.OK)
-        }
+        // const existUser = await this.authService.getUserByEmail(signUpUser.email)
+        // if(existUser == false){
+            return await this.authService.signUp(signUpUser) 
+        // }else{
+        //     throw new HttpException('User already exists', HttpStatus.OK)
+        // }
                    
     }
 

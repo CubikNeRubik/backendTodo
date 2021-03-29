@@ -21,7 +21,7 @@ import { User, UserSchema } from "./user.schema";
                     const list = UserSchema;
                     
                     counterService.init(User.name) 
-                    list.pre('save', async function(this: any) {
+                    list.pre('save', async function(this: any) { 
                         const id = await counterService.replaceId(User.name);
                         console.log('presave', id)
                         this._id = id;  
