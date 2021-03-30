@@ -15,23 +15,15 @@ import { List, ListDocument } from "./schemas/list.schema";
 @Injectable()
 export class ListService{
     constructor(
-        // @Inject(forwardRef(() => CounterService))
         @InjectModel(List.name) private listModel: Model<ListDocument>,
         ) {}
-
-    // private list = [];
 
     async findAll(): Promise<TodoItem[]>{
         const getItemResponse =  await this.listModel.find().exec()
         return getItemResponse.map(m => new TodoItem(m.toObject()))
-        // let album = plainToClass(TodoItem, response);
-        // let convertItems = plainToClass(TodoItem, getItemResponse.map(m => m.toObject()));
-        // return convertItems
-        
     }
 
     async create(todoDto:CreateTodoDto): Promise<TodoItem>{
-        
         const newTodo = new this.listModel(todoDto)
         const result = await newTodo.save()
         const newTransformItem = new TodoItem(result.toObject())
@@ -44,7 +36,6 @@ export class ListService{
 
     async updateTodo(id, updateTodoDto:UpdateTodoDto):Promise<TodoItem>{
         const updateResponse = await this.listModel.findByIdAndUpdate(id, updateTodoDto,  {new: true})
-        return  new TodoItem(updateResponse.toObject())
-        
+        return  new TodoItem(updateResponse.toObject())   
     }
 }

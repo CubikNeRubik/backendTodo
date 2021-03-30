@@ -1,7 +1,8 @@
 import { Exclude, Expose, Type } from 'class-transformer';
 
 export class userDto{
-    readonly _id:number 
+    @Expose()
+    readonly _id:number
 
     @Expose()
     get id(): number {
@@ -16,9 +17,6 @@ export class userDto{
 
     @Expose()
     readonly fullname:string
-
-    // @Type(() => List)
-    // list: List[]
 
     constructor(partial: Partial<userDto>) {
         Object.assign(this, partial);

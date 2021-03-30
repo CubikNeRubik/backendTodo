@@ -1,5 +1,7 @@
 import { Module } from "@nestjs/common";
+import { JwtModule } from "@nestjs/jwt";
 import { MongooseModule } from "@nestjs/mongoose";
+import { Constants } from "../constants";
 
 import { CounterModule } from "../counter/counter.module";
 import { CounterService } from "../counter/counter.service";
@@ -10,7 +12,7 @@ import { List, ListSchema } from "./schemas/list.schema";
 @Module({
     providers:[ListService],
     controllers:[ListController],
-    imports:[
+    imports:[JwtModule.register({ secret: Constants.secret}),
         MongooseModule.forFeatureAsync([
             {
                 name: List.name,
@@ -20,9 +22,7 @@ import { List, ListSchema } from "./schemas/list.schema";
                     
                     counterService.init(List.name) 
                     list.pre('save', async function(this: any) {
-                        const id = await counterService.replaceId(List.name);
-                        console.log('presave', id)
-                        this._id = id;  
+                        this._id = await counterService.replaceId(List.name);
                     });
                    
                     return list;
