@@ -6,7 +6,7 @@ import { CounterModule } from "../counter/counter.module";
 import { CounterService } from "../counter/counter.service";
 import { AuthController } from "./auth.controller";
 import { AuthService } from "./auth.service";
-import { jwtConstants } from "./constants";
+import { jwtConstants } from "../constants";
 import { User, UserSchema } from "./schemas/user.schema";
 
 @Module({
