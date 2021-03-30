@@ -1,7 +1,6 @@
-import { Exclude, Expose, Type } from 'class-transformer';
-import { List } from '../schemas/list.schema';
-import { CreateTodoDto } from './create-todo.dto';
-export class TodoItem{
+import { Expose } from 'class-transformer';
+
+export class TodoDto{
     readonly _id:number 
 
     @Expose()
@@ -21,10 +20,7 @@ export class TodoItem{
     @Expose()
     readonly selected:boolean 
 
-    // @Type(() => List)
-    // list: List[]
-
-    constructor(partial: Partial<TodoItem>) {
+    constructor(partial: Partial<TodoDto>) {
         Object.assign(this, partial);
     }
 }

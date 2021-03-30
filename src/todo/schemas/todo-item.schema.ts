@@ -1,10 +1,10 @@
 import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
 import { Document } from 'mongoose';
 
-export type ListDocument = List & Document;
+export type TodoItemDocument = TodoItem & Document;
 
 @Schema()
-export class List{
+export class TodoItem{
     @Prop()
     _id:number
 
@@ -21,4 +21,4 @@ export class List{
     selected:boolean
 }
 
-export const ListSchema = SchemaFactory.createForClass(List);
+export const ListSchema = SchemaFactory.createForClass(TodoItem);

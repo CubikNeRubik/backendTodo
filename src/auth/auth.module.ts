@@ -7,34 +7,32 @@ import { CounterService } from "../counter/counter.service";
 import { AuthController } from "./auth.controller";
 import { AuthService } from "./auth.service";
 import { jwtConstants } from "./constants";
-import { User, UserSchema } from "./user.schema";
+import { User, UserSchema } from "./schemas/user.schema";
 
 @Module({
     providers:[AuthService],
     controllers:[AuthController],
-    imports:[JwtModule.register({ secret: jwtConstants.secret}),
+    imports:[
+        JwtModule.register({ secret: jwtConstants.secret}),
         MongooseModule.forFeatureAsync([
             {
                 name: User.name,
                 imports:[CounterModule],
                 useFactory:(counterService: CounterService) => {
-                    const list = UserSchema;
+                    const user = UserSchema;
                     
                     counterService.init(User.name) 
-                    list.pre('save', async function(this: any) { 
-                        const id = await counterService.replaceId(User.name);
-                        console.log('presave', id)
-                        this._id = id;  
+                    user.pre('save', async function(this: any) { 
+                        this._id = await counterService.getNextId(User.name);
                     });
                    
-                    return list;
+                    return user;
                 },
                 inject: [CounterService],
             }
         ])
     ],
-    
-    // imports:[MongooseModule.forFeature([{ name: User.name, schema: UserSchema }])]
+    exports: [JwtModule],
 })
 
 export class AuthModule{

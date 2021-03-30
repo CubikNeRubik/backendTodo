@@ -9,7 +9,7 @@ export class Counter{
     _id: string
 
     @Prop({type: Number, default: 0})
-    seq: number
+    lastId: number
 
 }
 
