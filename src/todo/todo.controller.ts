@@ -11,7 +11,7 @@ import { TodoService } from './todo.service';
     excludePrefixes: ['_'],
 })
 @UseGuards(AuthGuard)
-@Controller('list')
+@Controller('todo')
 export class TodoController {
     constructor(private readonly todoService:TodoService){}
     

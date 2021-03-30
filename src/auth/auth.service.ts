@@ -8,7 +8,6 @@ import { User, UserDocument } from './schemas/user.schema';
 import { UserDto } from './auth-dto/user.dto';
 import { SignUpUserDto } from './auth-dto/sign-up.dto';
 import { SignInUserDto } from './auth-dto/sign-in.dto';
-import { plainToClass } from 'class-transformer';
 
 @Injectable()
 export class AuthService {
@@ -17,7 +16,7 @@ export class AuthService {
         private readonly jwtService: JwtService,
     ) {}
 
-    async getUserByEmail(email): Promise<User> {
+    async getUserByEmail(email): Promise<UserDocument> {
         return this.userModel.findOne({ email });
     }
 
@@ -49,7 +48,12 @@ export class AuthService {
         );
 
         if (isMatch) {
-            const payload = plainToClass(UserDto, user);
+            const payload = {
+                id: user.id,
+                email: user.email,
+                fullname: user.fullname,
+            };
+
             return {
                 accessToken: this.jwtService.sign(payload),
             };
