@@ -21,4 +21,4 @@ export class TodoItem{
     selected:boolean
 }
 
-export const ListSchema = SchemaFactory.createForClass(TodoItem);
+export const TodoSchema = SchemaFactory.createForClass(TodoItem);

@@ -1,6 +1,6 @@
 import { Module } from "@nestjs/common";
 import { MongooseModule } from "@nestjs/mongoose";
-import { Counter, counterSchema } from "./counter.schema";
+import { Counter, counterSchema } from "../schemas/counter.schema";
 
 import { CounterService } from "./counter.service";
 

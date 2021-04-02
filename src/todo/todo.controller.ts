@@ -1,5 +1,8 @@
-import { Body, ClassSerializerInterceptor, Controller, Delete, Get, HttpCode, HttpStatus, Param, Post, Put, SerializeOptions, UseGuards, UseInterceptors } from '@nestjs/common';
-import { AuthGuard } from '../auth/auth.guard';
+import { Body, ClassSerializerInterceptor, Controller, Delete, Get, HttpCode, HttpStatus, Param, Post, Put, Req, SerializeOptions, UseGuards, UseInterceptors } from '@nestjs/common';
+
+
+import { CustomRequest } from 'src/interfaces/custom-request.interface';
+import { AuthGuard } from '../common/auth.guard';
 import { CreateTodoDto } from './dto/create-todo.dto';
 import { TodoDto } from './dto/transform-todo.dto';
 import { UpdateTodoDto } from './dto/update-todo.dto';
@@ -13,17 +16,19 @@ import { TodoService } from './todo.service';
 @UseGuards(AuthGuard)
 @Controller('todo')
 export class TodoController {
-    constructor(private readonly todoService:TodoService){}
+    constructor(
+        private readonly todoService:TodoService,
+        ){}
     
     @Get()
-    getAll() : Promise<TodoDto[]>{
-        return this.todoService.findAll()    
+    getAll(@Req() req: CustomRequest) : Promise<TodoDto[]>{
+        return this.todoService.findByUserId(req.user.id);
     }
 
     @Post()
     @HttpCode(HttpStatus.CREATED)
-    create(@Body() createTodoDto:CreateTodoDto):Promise<TodoDto>{
-        return this.todoService.create(createTodoDto)
+    async create(@Req() req: CustomRequest, @Body() createTodoDto:CreateTodoDto):Promise<TodoDto>{
+        return this.todoService.create(createTodoDto, req.user.id)
     }
 
     @Delete(':id')

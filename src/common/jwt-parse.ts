@@ -2,7 +2,7 @@ import { Injectable, NestMiddleware } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { Response, NextFunction } from 'express';
 import { CustomRequest } from '../interfaces/custom-request.interface';
-import { UserDto } from './auth-dto/user.dto';
+import { UserDto } from '../auth/auth-dto/user.dto';
 
 export const X_AUTH_TOKEN = 'X-Auth-Token'; 
 

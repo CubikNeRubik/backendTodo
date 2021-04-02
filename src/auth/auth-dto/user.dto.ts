@@ -1,4 +1,5 @@
-import { Exclude, Expose, Type } from 'class-transformer';
+import { Exclude, Expose } from 'class-transformer';
+import { TodoItem } from '../../data/schemas/todo-item.schema';
 
 export class UserDto{
     readonly _id:number 
@@ -17,8 +18,8 @@ export class UserDto{
     @Expose()
     readonly fullname:string
 
-    // @Type(() => List)
-    // list: List[]
+    @Exclude()
+    items: TodoItem[]
 
     constructor(partial: Partial<UserDto>) {
         Object.assign(this, partial);

@@ -6,8 +6,8 @@ import { AppService } from './app.service';
 
 import { TodoModule } from './todo/todo.module';
 import { AuthModule } from './auth/auth.module';
-import { JwtParseMiddleware } from './auth/jwt-parse';
-import { dbHost } from './constants';
+import { JwtParseMiddleware } from './common/jwt-parse';
+import { dbHost } from './common/constants';
 
 @Module({
   imports: [

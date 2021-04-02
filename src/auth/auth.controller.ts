@@ -3,7 +3,7 @@ import { Body, ClassSerializerInterceptor, Controller, Post, SerializeOptions, U
 import { AuthService } from "./auth.service";
 import { SignInUserDto } from "./auth-dto/sign-in.dto";
 import { SignUpUserDto } from "./auth-dto/sign-up.dto";
-import { User } from "./schemas/user.schema";
+import { User } from "../data/schemas/user.schema";
 
 @UseInterceptors(ClassSerializerInterceptor)
 @SerializeOptions({
