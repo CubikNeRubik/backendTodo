@@ -7,40 +7,27 @@ import { CounterService } from "./counter/counter.service";
 import { TodoSchema, TodoItem } from "./schemas/todo-item.schema";
 import { User, UserSchema } from "./schemas/user.schema";
 
+function registerModel(model, schema) {
+    return {
+        name: model.name,
+        imports:[CounterModule],
+        useFactory:(counterService: CounterService) => {            
+            counterService.init(model.name) 
+            schema.pre('save', async function(this: any) {
+                this._id = await counterService.getNextId(model.name);
+            });
+            
+            return schema;
+        },
+        inject: [CounterService],
+    }
+}
 
 @Module({
     imports:[
         MongooseModule.forFeatureAsync([
-            {
-                name: TodoItem.name,
-                imports:[CounterModule],
-                useFactory:(counterService: CounterService) => {
-                    const todo = TodoSchema;
-                    
-                    counterService.init(TodoItem.name) 
-                    todo.pre('save', async function(this: any) {
-                        this._id = await counterService.getNextId(TodoItem.name);
-                    });
-                   
-                    return todo;
-                },
-                inject: [CounterService],
-            },
-            {
-                name: User.name,
-                imports:[CounterModule],
-                useFactory:(counterService: CounterService) => {
-                    const user = UserSchema;
-                    
-                    counterService.init(User.name) 
-                    user.pre('save', async function(this: any) { 
-                        this._id = await counterService.getNextId(User.name);
-                    });
-                   
-                    return user;
-                },
-                inject: [CounterService],
-            },
+            registerModel(TodoItem, TodoSchema),
+            registerModel(User, UserSchema),
         ]),
     ],
     exports:[MongooseModule]
