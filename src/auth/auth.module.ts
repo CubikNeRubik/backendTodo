@@ -3,14 +3,14 @@ import { JwtModule } from "@nestjs/jwt";
 
 import { AuthController } from "./auth.controller";
 import { AuthService } from "./auth.service";
-import { jwtConstants } from "../common/constants";
+import { AccessTokenVerifyConfig } from "../common/constants";
 import { DataModule } from "src/data/data.module";
 
 @Module({
     providers:[AuthService],
     controllers:[AuthController],
     imports:[
-        JwtModule.register({ secret: jwtConstants.secret}),
+        JwtModule.register(AccessTokenVerifyConfig),
         DataModule,
     ],
     exports: [JwtModule],

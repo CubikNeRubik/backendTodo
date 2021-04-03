@@ -1,7 +1,15 @@
 import { Expose } from 'class-transformer';
 
-export class TodoDto{
-    readonly _id:number 
+export interface TodoViewModel {
+    id: number
+    isComplete: boolean
+    text: string
+    time: number
+    selected: boolean
+}
+
+export class TodoDto {
+    readonly _id: number
 
     @Expose()
     get id(): number {
@@ -9,16 +17,16 @@ export class TodoDto{
     };
 
     @Expose()
-    readonly isComplete:boolean
+    readonly isComplete: boolean
 
     @Expose()
-    readonly text:string
+    readonly text: string
 
     @Expose()
-    readonly time:number
+    readonly time: number
 
     @Expose()
-    readonly selected:boolean 
+    readonly selected: boolean
 
     constructor(partial: Partial<TodoDto>) {
         Object.assign(this, partial);

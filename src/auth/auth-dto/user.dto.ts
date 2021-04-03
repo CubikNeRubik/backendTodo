@@ -2,6 +2,13 @@ import { Exclude, Expose } from 'class-transformer';
 import { UserRoles } from 'src/common/role.enum';
 import { TodoItem } from '../../data/schemas/todo-item.schema';
 
+export interface UserViewModel {
+    id: number
+    email:string
+    fullname:string
+    role: UserRoles
+}
+
 export class UserDto{
     readonly _id:number 
 
@@ -21,6 +28,9 @@ export class UserDto{
 
     @Exclude()
     items: TodoItem[]
+
+    @Exclude()
+    refreshToken: string
 
     @Expose()
     role: UserRoles

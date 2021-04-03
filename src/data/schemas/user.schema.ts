@@ -22,6 +22,9 @@ export class User {
     @Prop({ required: true })
     role: UserRoles
 
+    @Prop({ required: true })
+    refreshToken: string
+
     @Prop({ required: true, type: [{ type: SchemaTypes.Number, ref: TodoItem.name }]})
     items: TodoItem[];
 }
