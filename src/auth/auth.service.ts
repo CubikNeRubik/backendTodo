@@ -1,4 +1,4 @@
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import { BadRequestException, HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import * as bcrypt from 'bcrypt';
@@ -8,6 +8,8 @@ import { User, UserDocument } from '../data/schemas/user.schema';
 import { UserDto } from './auth-dto/user.dto';
 import { SignUpUserDto } from './auth-dto/sign-up.dto';
 import { SignInUserDto } from './auth-dto/sign-in.dto';
+import { classToPlain, plainToClass } from 'class-transformer';
+import { UserRoles } from 'src/common/role.enum';
 
 @Injectable()
 export class AuthService {
@@ -33,6 +35,7 @@ export class AuthService {
         const createdUser = new this.userModel({
             ...signUpUser,
             passwordHash: hashedPassword,
+            role: UserRoles.USER,
         });
         
         const responseUser = await createdUser.save();
@@ -42,21 +45,15 @@ export class AuthService {
     async signIn(signIn: SignInUserDto) {
         const user = await this.getUserByEmail(signIn.email);
         
-        const isMatch = await bcrypt.compare(
-            signIn.password,
-            user.passwordHash,
-        );
+        const isMatch = await bcrypt.compare(signIn.password, user.passwordHash);
 
-        if (isMatch) {
-            const payload = {
-                id: user.id,
-                email: user.email,
-                fullname: user.fullname,
-            };
+        if (!isMatch) throw new BadRequestException();
 
-            return {
-                accessToken: this.jwtService.sign(payload),
-            };
-        }
+        const userDto = new UserDto(user.toObject());
+        const payload = classToPlain(userDto, { excludePrefixes: ['_']});
+
+        return {
+            accessToken: this.jwtService.sign(payload),
+        };
     }
 }

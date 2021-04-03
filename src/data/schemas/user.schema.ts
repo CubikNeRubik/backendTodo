@@ -1,5 +1,6 @@
 import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
 import { Document, SchemaTypes } from 'mongoose';
+import { UserRoles } from "src/common/role.enum";
 import { TodoItem } from './todo-item.schema';
 
 export type UserDocument = User & Document;
@@ -17,6 +18,9 @@ export class User {
 
     @Prop({ required: true })
     fullname: string
+
+    @Prop({ required: true })
+    role: UserRoles
 
     @Prop({ required: true, type: [{ type: SchemaTypes.Number, ref: TodoItem.name }]})
     items: TodoItem[];

@@ -4,7 +4,7 @@ import { Model } from "mongoose";
 
 
 import { CreateTodoDto } from "./dto/create-todo.dto";
-import { TodoDto } from "./dto/transform-todo.dto";
+import { TodoDto } from "./dto/todo.dto";
 import { UpdateTodoDto } from "./dto/update-todo.dto";
 import { TodoItem, TodoItemDocument } from "../data/schemas/todo-item.schema";
 import { User, UserDocument } from "../data/schemas/user.schema";
